@@ -3,31 +3,40 @@
 namespace App\Controllers;
 
 use App\Models\CommandeModel;
+use App\Models\ClientModel;
 use CodeIgniter\Controller;
 
 class Commandes extends Controller
 {
     protected $commandeModel;
+    protected $clientModel;
 
     public function __construct()
     {
         $this->commandeModel = new CommandeModel();
+        $this->clientModel = new ClientModel(); // Assurez-vous d'avoir un modèle pour les clients
     }
 
-    // 1. Display All Commandes (Orders)
     public function index()
     {
-        $data['commandes'] = $this->commandeModel->findAll();
+        // Récupérer les commandes avec le nom du client
+        $db = \Config\Database::connect();
+        $builder = $db->table('commandes');
+        $builder->select('commandes.*, clients.nom AS client_nom');
+        $builder->join('clients', 'commandes.client_id = clients.id');
+
+        $data['commandes'] = $builder->get()->getResultArray();
+        $data['clients'] = $this->clientModel->findAll(); // Récupérer tous les clients pour le formulaire de sélection
+
         return view('commandes/index', $data);
     }
 
-    // 2. Show Form to Create New Commande
     public function create()
     {
-        return view('commandes/create');
+        $data['clients'] = $this->clientModel->findAll(); // Récupérer tous les clients
+        return view('commandes/create', $data);
     }
 
-    // 3. Save New Commande
     public function store()
     {
         $data = [
@@ -44,10 +53,10 @@ class Commandes extends Controller
         }
     }
 
-    // 4. Show Form to Edit Existing Commande
     public function edit($id)
     {
         $data['commande'] = $this->commandeModel->find($id);
+        $data['clients'] = $this->clientModel->findAll(); // Récupérer tous les clients
 
         if (!$data['commande']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("Order with ID $id not found.");
