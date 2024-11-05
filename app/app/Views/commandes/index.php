@@ -32,10 +32,14 @@
                         <td class="py-3 px-6"><?= htmlspecialchars($commande['id']) ?></td>
                         <td class="py-3 px-6"><?= htmlspecialchars($commande['date_commande']) ?></td>
                         <td class="py-3 px-6"><?= htmlspecialchars($commande['statut']) ?></td>
-                        <td class="py-3 px-6"><?= htmlspecialchars($commande['prix_total']) ?></td>
+                        <td class="py-3 px-6"><?= htmlspecialchars($commande['prix_total']) ?> Dh</td>
                         <td class="py-3 px-6"><?= htmlspecialchars($commande['client_nom']) ?></td>
                         <td class="py-3 px-6 text-center flex justify-center space-x-4">
-                            <!-- Edit Button with Data Attributes for Modal -->
+                            <a href="javascript:void(0)"
+                                onclick="viewOrderDetails(<?= $commande['id'] ?>)"
+                                class="text-yellow-500 hover:text-yellow-700 transition-colors duration-200" title="Voir">
+                                <i class="fas fa-eye text-lg"></i>
+                            </a>
                             <a href="javascript:void(0)"
                                 data-id="<?= $commande['id'] ?>"
                                 data-date="<?= htmlspecialchars($commande['date_commande']) ?>"
@@ -46,7 +50,7 @@
                                 class="text-blue-500 hover:text-blue-700 transition-colors duration-200" title="Modifier">
                                 <i class="fas fa-edit text-lg"></i>
                             </a>
-                            <a href="javascript:void(0)" onclick="printOrder(<?= $commande['id'] ?>)" class="text-green-500 hover:text-green-700 transition-colors duration-200" title="Imprimer">
+                            <a href="/commandes/bon_de_commande/<?= $commande['id'] ?>" class="text-yellow-500 hover:text-yellow-700 transition-colors duration-200" title="Bon de Commande">
                                 <i class="fas fa-print text-lg"></i>
                             </a>
                             <a href="/commandes/delete/<?= $commande['id'] ?>" class="text-red-500 hover:text-red-700 transition-colors duration-200" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')">
@@ -129,6 +133,30 @@
     </div>
 </div>
 
+<!-- View Order Details Modal -->
+<div id="viewOrderDetailsModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+        <h1 class="text-2xl font-bold mb-4">Détails de la Commande</h1>
+        <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 text-left text-sm font-semibold uppercase">Produit</th>
+                    <th class="py-2 px-4 text-left text-sm font-semibold uppercase">Quantité</th>
+                    <th class="py-2 px-4 text-left text-sm font-semibold uppercase">Prix Unitaire</th>
+                    <th class="py-2 px-4 text-left text-sm font-semibold uppercase">Total</th>
+                </tr>
+            </thead>
+            <tbody id="orderDetailsTable" class="text-gray-700 divide-y divide-gray-200">
+                <!-- Order details will be dynamically added here -->
+            </tbody>
+        </table>
+        <div class="flex justify-end mt-4">
+            <button onclick="closeModal('viewOrderDetailsModal')" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Fermer</button>
+        </div>
+    </div>
+</div>
+
+
 <?php echo view('includes/footer'); ?>
 
 <script>
@@ -158,6 +186,43 @@
         }
     }
 
+    function viewOrderDetails(orderId) {
+        fetch(`/commandes/getOrderDetails/${orderId}`)
+            .then(response => response.json())
+            .then(details => {
+                console.log("Order Details:", details); // Debug output
+                const orderDetailsTable = document.getElementById('orderDetailsTable');
+                orderDetailsTable.innerHTML = ''; // Clear previous details
+
+                if (details.error) {
+                    orderDetailsTable.innerHTML = `<tr><td colspan="4" class="text-center py-4">${details.error}</td></tr>`;
+                    return;
+                }
+
+                details.forEach(detail => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td class="py-2 px-4">${detail.produit_nom || 'Produit non spécifié'}</td>
+                    <td class="py-2 px-4">${detail.quantite}</td>
+                    <td class="py-2 px-4">${parseFloat(detail.prix_unitaire).toFixed(2)} €</td>
+                    <td class="py-2 px-4">${(detail.quantite * detail.prix_unitaire).toFixed(2)} €</td>
+                `;
+                    orderDetailsTable.appendChild(row);
+                });
+
+                // Show the modal
+                document.getElementById('viewOrderDetailsModal').classList.remove('hidden');
+            })
+            .catch(error => console.error('Error fetching order details:', error));
+    }
+
+    // Close modal when clicking outside of it  
+    window.onclick = function(event) {
+        const viewModal = document.getElementById('viewOrderDetailsModal');
+        if (event.target === viewModal) {
+            closeModal('viewOrderDetailsModal');
+        }
+    };
 
     // Function to open the Add Order Modal
     function openAddOrderModal() {

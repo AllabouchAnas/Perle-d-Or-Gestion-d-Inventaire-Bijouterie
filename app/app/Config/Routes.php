@@ -30,6 +30,9 @@ $routes->post('commandes/store', 'Commandes::store');
 $routes->get('commandes/edit/(:num)', 'Commandes::edit/$1');
 $routes->post('commandes/update/(:num)', 'Commandes::update/$1');
 $routes->get('commandes/delete/(:num)', 'Commandes::delete/$1');
+$routes->get('/commandes/getOrderDetails/(:num)', 'Commandes::getOrderDetails/$1');
+$routes->get('commandes/bon_de_commande/(:num)', 'Commandes::generateBonDeCommande/$1');
+
 
 // Produits
 $routes->get('produits', 'Produits::index');
@@ -39,13 +42,6 @@ $routes->get('produits/edit/(:num)', 'Produits::edit/$1');
 $routes->post('produits/update/(:num)', 'Produits::update/$1');
 $routes->get('produits/delete/(:num)', 'Produits::delete/$1');
 
-// DetailCommandes
-$routes->get('detailcommandes', 'DetailCommandes::index');
-$routes->get('detailcommandes/create', 'DetailCommandes::create');
-$routes->post('detailcommandes/store', 'DetailCommandes::store');
-$routes->get('detailcommandes/edit/(:num)', 'DetailCommandes::edit/$1');
-$routes->post('detailcommandes/update/(:num)', 'DetailCommandes::update/$1');
-$routes->get('detailcommandes/delete/(:num)', 'DetailCommandes::delete/$1');
 
 // Fournisseurs
 $routes->get('fournisseurs', 'Fournisseurs::index');

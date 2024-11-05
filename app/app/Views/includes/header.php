@@ -72,11 +72,6 @@ $currentPath = $_SERVER['REQUEST_URI']; // Get the current path
                     </a>
                 </li>
                 <li>
-                    <a href="/detailcommandes" class="flex items-center space-x-3 p-3 rounded transition duration-200 <?php if ($currentPath == '/detailcommandes') echo 'bg-gray-700 text-yellow-400'; ?>">
-                        <i class="fas fa-file-alt"></i><span>Détails Commandes</span>
-                    </a>
-                </li>
-                <li>
                     <a href="/fournisseurs" class="flex items-center space-x-3 p-3 rounded transition duration-200 <?php if ($currentPath == '/fournisseurs') echo 'bg-gray-700 text-yellow-400'; ?>">
                         <i class="fas fa-truck"></i><span>Fournisseurs</span>
                     </a>

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class DetailCommandeModel extends Model
 {
-    protected $table            = 'detailcommandes';
+    protected $table            = 'details_commandes';
     protected $primaryKey       = 'id';
     protected $allowedFields    = ['commande_id', 'produit_id', 'quantite', 'prix_unitaire'];
 }
