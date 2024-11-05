@@ -17,9 +17,22 @@ class Produits extends Controller
     // 1. Display All Products
     public function index()
     {
-        $data['produits'] = $this->produitModel->findAll();
+        $db = \Config\Database::connect();
+        $builder = $db->table('produits')
+        ->select('produits.*, categories.nom AS categorie_nom, fournisseurs.nom AS fournisseur_nom')
+        ->join('categories', 'produits.categorie_id = categories.id', 'left')
+        ->join('fournisseurs', 'produits.fournisseur_id = fournisseurs.id', 'left');
+
+        // Fetch products with joined category and supplier names
+        $data['produits'] = $builder->get()->getResultArray();
+
+        // Fetch all categories and suppliers for the dropdown
+        $data['categories'] = $db->table('categories')->select('id, nom')->get()->getResultArray();
+        $data['fournisseurs'] = $db->table('fournisseurs')->select('id, nom')->get()->getResultArray();
+
         return view('produits/index', $data);
     }
+
 
     // 2. Show Form to Create New Product
     public function create()
