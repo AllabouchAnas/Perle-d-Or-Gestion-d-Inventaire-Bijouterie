@@ -1,4 +1,4 @@
-<?php echo view('includes/header'); ?>
+<?php echo view('admin/includes/header'); ?>
 
 <div class="p-6">
     <!-- Title and Subheading Section -->
@@ -73,7 +73,7 @@
     </div>
 </div>
 
-<?php echo view('includes/footer'); ?>
+<?php echo view('admin/includes/footer'); ?>
 
 <script>
     // Function to Open the Edit Modal and Populate with Data

@@ -18,13 +18,13 @@ class Categories extends Controller
     public function index()
     {
         $data['categories'] = $this->categoryModel->findAll();
-        return view('categories/index', $data);
+        return view('admin/categories/index', $data);
     }
 
     // 2. Show Form to Create New Category
     public function create()
     {
-        return view('categories/create');
+        return view('admin/categories/create');
     }
 
     // 3. Save New Category
@@ -50,7 +50,7 @@ class Categories extends Controller
             throw new \CodeIgniter\Exceptions\PageNotFoundException("Category with ID $id not found.");
         }
 
-        return view('categories/edit', $data);
+        return view('admin/categories/edit', $data);
     }
 
     // 5. Update Category

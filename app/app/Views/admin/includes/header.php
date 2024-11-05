@@ -34,7 +34,7 @@ $currentPath = $_SERVER['REQUEST_URI']; // Get the current path
                     <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Paramètres</a>
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Déconnexion</a>
+                        <a href="/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Déconnexion</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@ $currentPath = $_SERVER['REQUEST_URI']; // Get the current path
             <h2 class="text-lg font-semibold text-yellow-400 mb-6 tracking-wide">Application</h2>
             <ul class="text-lg">
                 <li>
-                    <a href="/" class="flex items-center space-x-3 p-3 rounded transition duration-200 <?php if ($currentPath == '/') echo 'bg-gray-700 text-yellow-400'; ?>">
+                    <a href="/admin" class="flex items-center space-x-3 p-3 rounded transition duration-200 <?php if ($currentPath == '/admin') echo 'bg-gray-700 text-yellow-400'; ?>">
                         <i class="fas fa-home"></i><span>Accueil</span>
                     </a>
                 </li>

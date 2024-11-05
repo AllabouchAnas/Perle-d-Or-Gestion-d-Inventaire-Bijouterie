@@ -18,13 +18,7 @@ class Clients extends Controller
     public function index()
     {
         $data['clients'] = $this->clientModel->findAll();
-        return view('clients/index', $data);
-    }
-
-    // 2. Show Form to Create New Client
-    public function create()
-    {
-        return view('clients/create');
+        return view('admin/clients/index', $data);
     }
 
     // 3. Save New Client
@@ -42,18 +36,6 @@ class Clients extends Controller
         } else {
             return redirect()->back()->with('errors', $this->clientModel->errors())->withInput();
         }
-    }
-
-    // 4. Show Form to Edit Existing Client
-    public function edit($id)
-    {
-        $data['client'] = $this->clientModel->find($id);
-
-        if (!$data['client']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Client with ID $id not found.");
-        }
-
-        return view('clients/edit', $data);
     }
 
     // 5. Update Client

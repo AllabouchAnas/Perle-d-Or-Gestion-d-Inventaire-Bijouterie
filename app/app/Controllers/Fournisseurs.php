@@ -18,13 +18,7 @@ class Fournisseurs extends Controller
     public function index()
     {
         $data['fournisseurs'] = $this->fournisseurModel->findAll();
-        return view('fournisseurs/index', $data);
-    }
-
-    // 2. Show Form to Create New Supplier
-    public function create()
-    {
-        return view('fournisseurs/create');
+        return view('admin/fournisseurs/index', $data);
     }
 
     // 3. Save New Supplier
@@ -42,18 +36,6 @@ class Fournisseurs extends Controller
         } else {
             return redirect()->back()->with('errors', $this->fournisseurModel->errors())->withInput();
         }
-    }
-
-    // 4. Show Form to Edit Existing Supplier
-    public function edit($id)
-    {
-        $data['fournisseur'] = $this->fournisseurModel->find($id);
-
-        if (!$data['fournisseur']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Supplier with ID $id not found.");
-        }
-
-        return view('fournisseurs/edit', $data);
     }
 
     // 5. Update Supplier

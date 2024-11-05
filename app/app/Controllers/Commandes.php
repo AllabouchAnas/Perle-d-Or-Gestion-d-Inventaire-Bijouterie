@@ -32,7 +32,7 @@ class Commandes extends Controller
         $data['commandes'] = $builder->get()->getResultArray();
         $data['clients'] = $this->clientModel->findAll();
 
-        return view('commandes/index', $data);
+        return view('admin/commandes/index', $data);
     }
 
     public function getOrderDetails($id)
@@ -94,12 +94,6 @@ class Commandes extends Controller
         $dompdf->stream("bon_de_commande_" . $commande['id'] . ".pdf", ["Attachment" => true]);
     }
 
-    public function create()
-    {
-        $data['clients'] = $this->clientModel->findAll(); // Récupérer tous les clients
-        return view('commandes/create', $data);
-    }
-
     public function store()
     {
         $data = [
@@ -114,18 +108,6 @@ class Commandes extends Controller
         } else {
             return redirect()->back()->with('errors', $this->commandeModel->errors())->withInput();
         }
-    }
-
-    public function edit($id)
-    {
-        $data['commande'] = $this->commandeModel->find($id);
-        $data['clients'] = $this->clientModel->findAll(); // Récupérer tous les clients
-
-        if (!$data['commande']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Order with ID $id not found.");
-        }
-
-        return view('commandes/edit', $data);
     }
 
     // 5. Update Commande
