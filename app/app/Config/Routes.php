@@ -41,3 +41,14 @@ $routes->get('fournisseurs', 'Fournisseurs::index');
 $routes->post('fournisseurs/store', 'Fournisseurs::store');
 $routes->post('fournisseurs/update/(:num)', 'Fournisseurs::update/$1');
 $routes->get('fournisseurs/delete/(:num)', 'Fournisseurs::delete/$1');
+
+//authentifications
+$routes->get('register', 'AuthController::register');
+$routes->post('register', 'AuthController::register');
+$routes->get('login', 'AuthController::login');
+$routes->post('login', 'AuthController::login');
+$routes->get('request_reset', 'PasswordResetController::requestReset');
+$routes->post('request_reset', 'PasswordResetController::requestReset');
+$routes->get('reset_password/(:any)', 'PasswordResetController::resetPassword/$1');
+$routes->post('reset_password/(:any)', 'PasswordResetController::resetPassword/$1');
+
