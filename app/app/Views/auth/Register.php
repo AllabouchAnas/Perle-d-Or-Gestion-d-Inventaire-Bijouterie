@@ -8,19 +8,21 @@
 <body>
     <h1>Inscription</h1>
 
-    <?php if(session()->getFlashdata('errors')): ?>
+    <!-- Afficher les erreurs de validation -->
+    <?php if (session()->getFlashdata('errors')): ?>
         <div>
-            <?php foreach(session()->getFlashdata('errors') as $error): ?>
-                <p><?= esc($error) ?></p>
+            <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                <p style="color: red;"><?= esc($error) ?></p>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
-    <form action="<?= base_url('register') ?>" method="post">
-        <label for="email">Email:</label>
+    <!-- Formulaire d'inscription -->
+    <form action="<?= base_url('register') ?>" method="POST">
+        <label for="email">Email :</label>
         <input type="email" name="email" required>
 
-        <label for="password">Mot de passe:</label>
+        <label for="password">Mot de passe :</label>
         <input type="password" name="password" required>
 
         <button type="submit">S'inscrire</button>
