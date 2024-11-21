@@ -9,46 +9,41 @@ class AuthController extends Controller
 {
     public function register()
     {
-        $model = new UserModel();
-
-        // Validation des champs
-        $validation =  \Config\Services::validation();
-
-        // Définir les règles de validation
+        helper(['form', 'url']);
+    
+        $validation = \Config\Services::validation();
+    
         $validation->setRules([
             'complete_name' => 'required|min_length[3]|max_length[255]',
             'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[6]',
             'password_confirm' => 'matches[password]',
         ]);
-
+    
         if ($this->request->getMethod() === 'POST') {
-            // Récupérer les données du formulaire
-            $data = [
-                'complete_name' => $this->request->getPost('complete_name'),
-                'email' => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
-                'email_verified' => 0, // Non vérifié par défaut
-                'created_at' => date('Y-m-d H:i:s'),
-            ];
-
-            // Validation des données
-            if (!$validation->run($data)) {
-                // Si la validation échoue, retourner à la vue avec les erreurs
+            if ($validation->run($this->request->getPost())) {
+                // Prepare data for insertion
+                $data = [
+                    'complete_name' => $this->request->getPost('complete_name'),
+                    'email' => $this->request->getPost('email'),
+                    'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
+                    'email_verified' => 0, // Default: not verified
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+    
+                $model = new UserModel();
+                $model->save($data);
+    
+                return redirect()->to('/login')->with('success', 'Inscription réussie.');
+            } else {
+                // Redirect back with errors
                 return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             }
-
-            // Insérer les données dans la base
-            if ($model->insert($data)) {
-                // Vous pouvez envoyer un email de vérification ici
-                return redirect()->to('/login')->with('success', 'Inscription réussie !');
-            } else {
-                return redirect()->back()->with('errors', $model->errors());
-            }
         }
-
+    
         return view('auth/register');
     }
+    
 
     public function login()
     {

@@ -19,26 +19,27 @@
 
     <!-- Formulaire d'inscription -->
     <form action="<?= base_url('register') ?>" method="POST">
-        <?= csrf_field() ?> <!-- Protection CSRF -->
+    <?= csrf_field() ?> <!-- Add CSRF protection -->
 
-        <label for="complete_name">Nom complet:</label>
-        <input type="text" name="complete_name" value="<?= old('complete_name') ?>" required>
+    <label for="complete_name">Nom complet:</label>
+    <input type="text" name="complete_name" value="<?= old('complete_name') ?>" required>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" value="<?= old('email') ?>" required>
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="<?= old('email') ?>" required>
 
-        <label for="password">Mot de passe:</label>
-        <input type="password" name="password" required>
+    <label for="password">Mot de passe:</label>
+    <input type="password" name="password" required>
 
-        <label for="password_confirm">Confirmer le mot de passe:</label>
-        <input type="password" name="password_confirm" required>
+    <label for="password_confirm">Confirmer le mot de passe:</label>
+    <input type="password" name="password_confirm" required>
 
-        <button type="submit">S'inscrire</button>
-    </form>
+    <button type="submit">S'inscrire</button>
+</form>
+
 
     <p>Déjà inscrit ? <a href="<?= base_url('login') ?>">Connectez-vous ici</a></p>
 </body>
 </html>
 
 
-//modified
+
