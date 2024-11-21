@@ -8,20 +8,30 @@
 <body>
     <h1>Inscription</h1>
 
+    <!-- Affichage des erreurs de validation -->
     <?php if(session()->getFlashdata('errors')): ?>
         <div>
             <?php foreach(session()->getFlashdata('errors') as $error): ?>
-                <p><?= esc($error) ?></p>
+                <p style="color: red;"><?= esc($error) ?></p>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 
-    <form action="<?= base_url('register') ?>" method="post">
+    <!-- Formulaire d'inscription -->
+    <form action="<?= base_url('register') ?>" method="POST">
+        <?= csrf_field() ?> <!-- Protection CSRF -->
+
+        <label for="complete_name">Nom complet:</label>
+        <input type="text" name="complete_name" value="<?= old('complete_name') ?>" required>
+
         <label for="email">Email:</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="<?= old('email') ?>" required>
 
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" required>
+
+        <label for="password_confirm">Confirmer le mot de passe:</label>
+        <input type="password" name="password_confirm" required>
 
         <button type="submit">S'inscrire</button>
     </form>

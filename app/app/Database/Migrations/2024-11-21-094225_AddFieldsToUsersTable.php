@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
@@ -12,26 +11,23 @@ class AddFieldsToUsersTable extends Migration
             'complete_name' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'null' => false,
-            ],
-            'date_of_birth' => [
-                'type' => 'DATE',
-                'null' => true,
+                'default' => '', // Valeur par défaut pour SQLite
+                'null' => false, // Colonne non nullable
             ],
             'email_verified' => [
                 'type' => 'BOOLEAN',
-                'default' => false,
+                'default' => false, // Valeur par défaut
             ],
             'reset_token' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'null' => true,
+                'null' => true, // Colonne nullable
             ],
         ]);
     }
 
     public function down()
     {
-        $this->forge->dropColumn('users', ['complete_name', 'date_of_birth', 'email_verified', 'reset_token']);
+        $this->forge->dropColumn('users', ['complete_name', 'email_verified', 'reset_token']);
     }
 }
