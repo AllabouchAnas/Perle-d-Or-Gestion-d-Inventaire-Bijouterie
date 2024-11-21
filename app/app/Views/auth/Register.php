@@ -39,3 +39,6 @@
     <p>Déjà inscrit ? <a href="<?= base_url('login') ?>">Connectez-vous ici</a></p>
 </body>
 </html>
+
+
+//modified
