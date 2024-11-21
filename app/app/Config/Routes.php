@@ -51,4 +51,5 @@ $routes->get('request_reset', 'PasswordResetController::requestReset');
 $routes->post('request_reset', 'PasswordResetController::requestReset');
 $routes->get('reset_password/(:any)', 'PasswordResetController::resetPassword/$1');
 $routes->post('reset_password/(:any)', 'PasswordResetController::resetPassword/$1');
+$routes->get('logout', 'AuthController::logout');
 

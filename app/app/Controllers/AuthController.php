@@ -47,17 +47,38 @@ class AuthController extends Controller
 
     public function login()
     {
+        helper(['form', 'url']);
+        $session = session();
+
         if ($this->request->getMethod() === 'POST') {
+            // Validation des champs
+            $validation = \Config\Services::validation();
+            $validation->setRules([
+                'email' => 'required|valid_email',
+                'password' => 'required|min_length[6]',
+            ]);
+
+            if (!$validation->run($this->request->getPost())) {
+                return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            }
+
+            // Vérification de l'utilisateur
             $model = new UserModel();
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 
             $user = $model->where('email', $email)->first();
 
-            // Vérifier si l'utilisateur existe et si le mot de passe est correct
             if ($user && password_verify($password, $user['password'])) {
-                // Authentifier l'utilisateur (généralement avec une session)
-                return redirect()->to('/dashboard')->with('success', 'Connexion réussie !');
+                // Stocker les informations dans la session
+                $session->set([
+                    'user_id' => $user['id'],
+                    'complete_name' => $user['complete_name'],
+                    'email' => $user['email'],
+                    'is_logged_in' => true,
+                ]);
+
+                return redirect()->to('/register')->with('success', 'Connexion réussie !');
             } else {
                 return redirect()->back()->with('error', 'Identifiants incorrects.');
             }
@@ -82,5 +103,11 @@ class AuthController extends Controller
         }
 
         return redirect()->to('/login')->with('error', 'Token de vérification invalide.');
+    }
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/login')->with('success', 'Vous avez été déconnecté avec succès.');
     }
 }

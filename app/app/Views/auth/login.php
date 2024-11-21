@@ -8,15 +8,34 @@
 <body>
     <h1>Connexion</h1>
 
-    <?php if(session()->getFlashdata('error')): ?>
-        <div>
-            <p><?= esc(session()->getFlashdata('error')) ?></p>
+    <!-- Affichage des messages flash -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div style="color: green;">
+            <?= session()->getFlashdata('success') ?>
         </div>
     <?php endif; ?>
 
-    <form action="<?= base_url('login') ?>" method="post">
+    <?php if (session()->getFlashdata('error')): ?>
+        <div style="color: red;">
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Affichage des erreurs de validation -->
+    <?php if (session()->getFlashdata('errors')): ?>
+        <div style="color: red;">
+            <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                <p><?= esc($error) ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Formulaire de connexion -->
+    <form action="<?= base_url('login') ?>" method="POST">
+        <?= csrf_field() ?> <!-- Protection CSRF -->
+
         <label for="email">Email:</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="<?= old('email') ?>" required>
 
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" required>
@@ -24,6 +43,6 @@
         <button type="submit">Se connecter</button>
     </form>
 
-    <p>Mot de passe oublié ? <a href="<?= base_url('request_reset') ?>">Réinitialisez-le ici</a></p>
+    <p>Pas encore inscrit ? <a href="<?= base_url('register') ?>">Créer un compte</a></p>
 </body>
 </html>
