@@ -26,7 +26,7 @@ class AuthController extends Controller
             $data = [
                 'complete_name' => $this->request->getPost('complete_name'),
                 'email' => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT), // BCRYPT recommandé
+                'password' =>$this->request->getPost('password'), PASSWORD_BCRYPT, // BCRYPT recommandé
                 'email_verified' => 0, // Non vérifié par défaut
                 'created_at' => date('Y-m-d H:i:s'),
             ];
