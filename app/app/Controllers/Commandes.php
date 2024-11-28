@@ -37,9 +37,11 @@ class Commandes extends Controller
 
     public function getOrderDetails($id)
     {
-        // Fetch order details from detailcommandes table based on commande_id
+        // Fetch order details from details_commandes table based on commande_id
         $details = $this->detailCommandeModel
-            ->where('commande_id', $id)
+            ->select('details_commandes.*, produits.nom AS produit_nom')
+            ->join('produits', 'produits.id = details_commandes.produit_id')
+            ->where('details_commandes.commande_id', $id)
             ->findAll();
 
         // Debug output
@@ -49,6 +51,7 @@ class Commandes extends Controller
 
         return $this->response->setJSON($details);
     }
+
 
     public function generateBonDeCommande($id)
     {
