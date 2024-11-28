@@ -54,48 +54,64 @@ class Commandes extends Controller
 
 
     public function generateBonDeCommande($id)
-    {
-        // Récupérer la commande et le client
-        $commande = $this->commandeModel->find($id);
-        $client = $this->clientModel->find($commande['client_id']);
+{
+    // Récupérer la commande et le client
+    $commande = $this->commandeModel->find($id);
+    $client = $this->clientModel->find($commande['client_id']);
 
-        // Récupérer les détails de la commande
-        $details = $this->detailCommandeModel
-            ->where('commande_id', $id)
-            ->findAll();
+    // Initialize the database connection
+    $db = \Config\Database::connect();
 
-        // Si la commande n'existe pas, retourner une erreur
-        if (!$commande) {
-            return redirect()->to('/commandes')->with('errors', 'Commande introuvable');
-        }
+    // Récupérer les détails de la commande avec une jointure sur la table "produits"
+    $details = $db->table('details_commandes')
+        ->select('details_commandes.*, produits.nom AS produit_nom')  // Use alias 'produit_nom'
+        ->join('produits', 'details_commandes.produit_id = produits.id', 'left')
+        ->where('details_commandes.commande_id', $id)
+        ->get()
+        ->getResultArray();
 
-        // Créer les options Dompdf
-        $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true); // pour charger des images distantes si nécessaire
-
-        // Initialiser Dompdf avec les options
-        $dompdf = new Dompdf($options);
-
-        // Charger la vue pour le PDF
-        $html = view('commandes/bon_de_commande', [
-            'commande' => $commande,
-            'client' => $client,
-            'details' => $details
-        ]);
-
-        // Charger le HTML dans Dompdf
-        $dompdf->loadHtml($html);
-
-        // Définir le format de la page (A4 en portrait)
-        $dompdf->setPaper([0, 0, 595, 595], 'portrait');
-
-        // Renderiser le PDF
-        $dompdf->render();
-
-        // Téléchargement ou affichage dans le navigateur
-        $dompdf->stream("bon_de_commande_" . $commande['id'] . ".pdf", ["Attachment" => true]);
+    // Calculate the total dynamically
+    $totalAmount = 0;
+    foreach ($details as $detail) {
+        $totalAmount += $detail['quantite'] * $detail['prix_unitaire']; // Ensure correct multiplication
     }
+
+    // Si la commande n'existe pas, retourner une erreur
+    if (!$commande) {
+        return redirect()->to('/commandes')->with('errors', 'Commande introuvable');
+    }
+
+    // Créer les options Dompdf
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isRemoteEnabled', true); // pour charger des images distantes si nécessaire
+
+    // Initialiser Dompdf avec les options
+    $dompdf = new Dompdf($options);
+
+    // Charger la vue pour le PDF avec le total calculé
+    $html = view('admin/commandes/bon_de_commande', [
+        'commande' => $commande,
+        'client' => $client,
+        'details' => $details,
+        'totalAmount' => number_format($totalAmount, 2, ',', ' ') // Pass the calculated total
+    ]);
+
+    // Charger le HTML dans Dompdf
+    $dompdf->loadHtml($html);
+
+    // Définir le format de la page (A4 en portrait)
+    $dompdf->setPaper([0, 0, 595, 595], 'portrait');
+
+    // Renderiser le PDF
+    $dompdf->render();
+
+    // Téléchargement ou affichage dans le navigateur
+    $dompdf->stream("bon_de_commande_" . $commande['id'] . ".pdf", ["Attachment" => true]);
+}
+
+
+
 
     public function store()
     {

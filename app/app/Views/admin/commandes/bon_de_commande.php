@@ -93,8 +93,9 @@
     </table>
 
     <div class="total">
-        <strong>Total à payer:</strong> <?= number_format($commande['prix_total'], 2) ?> €
-    </div>
+    <strong>Total à payer:</strong> <?= $totalAmount ?> €
+</div>
+
 
     <div class="footer">
         Merci pour votre commande !
