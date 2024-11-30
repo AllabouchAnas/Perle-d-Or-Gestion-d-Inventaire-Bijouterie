@@ -8,33 +8,30 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
     <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
         <div class="flex items-center justify-between">
-            <h3 class="text-xl font-semibold text-gray-800">Ventes d'Articles</h3>
-            <span class="bg-green-100 text-green-700 text-sm font-medium px-2 py-1 rounded">33%↑</span>
+            <h3 class="text-xl font-semibold text-gray-800">Clients Inscrits</h3>
         </div>
-        <p class="text-2xl font-bold text-gray-800 mt-4">4,710</p>
+        <p class="text-2xl font-bold text-gray-800 mt-4"><?= $clientsInscrits ?></p>
     </div>
     <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
         <div class="flex items-center justify-between">
-            <h3 class="text-xl font-semibold text-gray-800">Nouvelles Commandes</h3>
-            <span class="bg-red-100 text-red-700 text-sm font-medium px-2 py-1 rounded">2%↓</span>
+            <h3 class="text-xl font-semibold text-gray-800">Total Commandes</h3>
         </div>
-        <p class="text-2xl font-bold text-gray-800 mt-4">3,721</p>
+        <p class="text-2xl font-bold text-gray-800 mt-4"><?= $totalCommandes ?></p>
     </div>
     <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
         <div class="flex items-center justify-between">
             <h3 class="text-xl font-semibold text-gray-800">Produits Totaux</h3>
-            <span class="bg-green-100 text-green-700 text-sm font-medium px-2 py-1 rounded">12%↑</span>
         </div>
-        <p class="text-2xl font-bold text-gray-800 mt-4">2,149</p>
+        <p class="text-2xl font-bold text-gray-800 mt-4"><?= $produitsTotaux ?></p>
     </div>
     <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
         <div class="flex items-center justify-between">
             <h3 class="text-xl font-semibold text-gray-800">Valeur du Stock</h3>
-            <span class="bg-green-100 text-green-700 text-sm font-medium px-2 py-1 rounded">15%↑</span>
         </div>
-        <p class="text-2xl font-bold text-gray-800 mt-4">€152,040</p>
+        <p class="text-2xl font-bold text-gray-800 mt-4">€<?= number_format($valeurStock, 2, ',', ' ') ?></p>
     </div>
 </div>
+
 
 <!-- Charts Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

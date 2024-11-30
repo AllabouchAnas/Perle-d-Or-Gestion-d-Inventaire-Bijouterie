@@ -21,12 +21,6 @@ class Categories extends Controller
         return view('admin/categories/index', $data);
     }
 
-    // 2. Show Form to Create New Category
-    public function create()
-    {
-        return view('admin/categories/create');
-    }
-
     // 3. Save New Category
     public function store()
     {
@@ -39,18 +33,6 @@ class Categories extends Controller
         } else {
             return redirect()->back()->with('errors', $this->categoryModel->errors())->withInput();
         }
-    }
-
-    // 4. Show Form to Edit Existing Category
-    public function edit($id)
-    {
-        $data['category'] = $this->categoryModel->find($id);
-
-        if (!$data['category']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Category with ID $id not found.");
-        }
-
-        return view('admin/categories/edit', $data);
     }
 
     // 5. Update Category

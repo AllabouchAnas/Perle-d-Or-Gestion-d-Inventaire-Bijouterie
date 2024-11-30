@@ -202,7 +202,7 @@
                 details.forEach(detail => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                    <td class="py-2 px-4">${detail.produit_nom || 'Produit non spécifié'}</td>
+                    <td class="py-2 px-4">${detail.produit_nom }</td>
                     <td class="py-2 px-4">${detail.quantite}</td>
                     <td class="py-2 px-4">${parseFloat(detail.prix_unitaire).toFixed(2)} €</td>
                     <td class="py-2 px-4">${(detail.quantite * detail.prix_unitaire).toFixed(2)} €</td>
