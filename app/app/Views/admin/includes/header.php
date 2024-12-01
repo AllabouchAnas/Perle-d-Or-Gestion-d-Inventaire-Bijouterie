@@ -78,7 +78,7 @@ $currentPath = $_SERVER['REQUEST_URI']; // Get the current path
                 </li>
                 <li>
                     <a href="/user" class="flex items-center space-x-3 p-3 rounded transition duration-200 <?php if ($currentPath == '/user') echo 'bg-gray-700 text-yellow-400'; ?>">
-                        <i class="fas fa-truck"></i><span>utilisateur</span>
+                        <i class="fas fa-users"></i><span>Utilisateur</span>
                     </a>
                 </li>
             </ul>

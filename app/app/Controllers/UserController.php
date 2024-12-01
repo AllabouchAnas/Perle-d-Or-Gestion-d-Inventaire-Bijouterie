@@ -13,7 +13,7 @@ class UserController extends Controller
         $this->userModel = new UserModel();
     }
 
-    // Lire : Afficher la liste des utilisateurs
+
     public function index()
     {
         $data['users'] = $this->userModel->findAll();
@@ -22,7 +22,6 @@ class UserController extends Controller
 
 
 
-    // Mettre à jour : Traitement du formulaire de modification
     public function update($id)
     {
         $data = [
@@ -34,17 +33,17 @@ class UserController extends Controller
         ];
 
         if ($this->userModel->save($data)) {
-            return redirect()->to('/users')->with('success', 'user updated successfully.');
+            return redirect()->to('/user')->with('success', 'user updated successfully.');
         } else {
             return redirect()->back()->with('errors', $this->userModel->errors())->withInput();
         }
     }
 
-    // Supprimer : Supprimer un utilisateur
+
     public function delete($id)
     {
         if ($this->userModel->delete($id)) {
-            return redirect()->to('/users')->with('success', 'User deleted successfully.');
+            return redirect()->to('/user')->with('success', 'User deleted successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to deleted user.');
         }

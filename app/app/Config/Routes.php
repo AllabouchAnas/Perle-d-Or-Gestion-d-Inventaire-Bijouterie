@@ -52,6 +52,5 @@ $routes->get('logout', 'AuthController::logout');
 
 
 $routes->get('user', 'UserController::index');
-
 $routes->post('user/update/(:num)', 'UserController::update/$1');
 $routes->get('user/delete/(:num)', 'UserController::delete/$1');
