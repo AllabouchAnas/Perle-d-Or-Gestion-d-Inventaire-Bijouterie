@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\UserModel;
+use CodeIgniter\Controller;
 
-class UserController extends BaseController
+class UserController extends Controller
 {
     protected $userModel;
 
@@ -18,25 +17,26 @@ class UserController extends BaseController
     public function index()
     {
         $data['users'] = $this->userModel->findAll();
-        return view('users/index', $data);
+        return view('admin/users/index', $data);
     }
 
-    // Mettre à jour : Afficher le formulaire de modification
-    public function edit($id)
-    {
-        $data['user'] = $this->userModel->find($id);
-        return view('users/edit', $data);
-    }
+
 
     // Mettre à jour : Traitement du formulaire de modification
     public function update($id)
     {
-        $data = $this->request->getPost();
+        $data = [
+            'id' => $id,
+            'complete_name' => $this->request->getPost('complete_name'),
+            'email'=> $this->request->getPost('email'),
 
-        if ($this->userModel->update($id, $data)) {
-            return redirect()->to('/users')->with('success', 'Utilisateur mis à jour avec succès.');
+
+        ];
+
+        if ($this->userModel->save($data)) {
+            return redirect()->to('/users')->with('success', 'user updated successfully.');
         } else {
-            return redirect()->back()->with('errors', $this->userModel->errors());
+            return redirect()->back()->with('errors', $this->userModel->errors())->withInput();
         }
     }
 
@@ -44,9 +44,9 @@ class UserController extends BaseController
     public function delete($id)
     {
         if ($this->userModel->delete($id)) {
-            return redirect()->to('/users')->with('success', 'Utilisateur supprimé avec succès.');
+            return redirect()->to('/users')->with('success', 'User deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Impossible de supprimer l\'utilisateur.');
+            return redirect()->back()->with('error', 'Failed to deleted user.');
         }
     }
 }
