@@ -50,8 +50,8 @@ $routes->post('register', 'AuthController::register');
 $routes->get('logout', 'AuthController::logout');
 
 
-//users
-$routes->get('/users', 'UserController::index');          // Lire
-$routes->get('/users/edit/(:num)', 'UserController::edit/$1'); // Formulaire de modification
-$routes->post('/users/update/(:num)', 'UserController::update/$1'); // Mettre à jour
-$routes->delete('/users/delete/(:num)', 'UserController::delete/$1'); // Supprimer
+
+$routes->get('user', 'UserController::index');
+
+$routes->post('user/update/(:num)', 'UserController::update/$1');
+$routes->get('user/delete/(:num)', 'UserController::delete/$1');
