@@ -6,28 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
 
-    <!-- Inclure Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Optionnel : Si vous avez votre propre fichier CSS -->
-   
+    <!-- Intégration de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <h1 class="text-center mb-4">Connexion</h1>
+<body class="bg-gray-900">
+    <div class="container mx-auto">
+        <div class="flex justify-center items-center min-h-screen">
+            <!-- Section gauche avec formulaire -->
+            <div class="w-full md:w-1/2 bg-black text-yellow-400 shadow-md rounded-l-lg p-8 max-w-md">
+                <h1 class="text-3xl font-bold text-center mb-6">Connexion</h1>
 
                 <!-- Affichage des messages flash -->
                 <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success">
+                    <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
                         <?= session()->getFlashdata('success') ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (session()->getFlashdata('error')): ?>
-                    <div class="alert alert-danger">
+                    <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
                         <?= session()->getFlashdata('error') ?>
                     </div>
                 <?php endif; ?>
@@ -37,28 +35,32 @@
                     <?= csrf_field() ?> <!-- Protection CSRF -->
 
                     <!-- Champ Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" value="<?= old('email') ?>" class="form-control" required>
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium">Email</label>
+                        <input type="email" name="email" value="<?= old('email') ?>" class="w-full mt-1 p-2 border border-yellow-400 bg-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                     </div>
 
                     <!-- Champ Mot de passe -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" name="password" class="form-control" required>
+                    <div class="mb-4">
+                        <label for="password" class="block text-sm font-medium">Mot de passe</label>
+                        <input type="password" name="password" class="w-full mt-1 p-2 border border-yellow-400 bg-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
                     </div>
 
-                    <!-- Bouton de soumission -->
-                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                    <!-- Bouton de connexion -->
+                    <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded">
+                        Se connecter
+                    </button>
                 </form>
 
-                <p class="mt-3 text-center">Pas encore inscrit ? <a href="<?= base_url('register') ?>">Créer un compte</a></p>
+                <p class="mt-4 text-center text-sm">Pas encore inscrit ? <a href="<?= base_url('register') ?>" class="text-yellow-400 hover:underline">Créer un compte</a></p>
+            </div>
+
+            <!-- Section droite avec image -->
+            <div class="w-1/2 hidden md:block">
+                <img src="" alt="Image de présentation" class="h-full w-full object-cover rounded-r-lg">
             </div>
         </div>
     </div>
-
-    <!-- Inclure le script Bootstrap JS (optionnel) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
