@@ -47,7 +47,7 @@
         <form id="editUserForm" action="" method="post">
             <input type="hidden" name="id" id="userId">
             <label for="userName" class="block text-sm font-medium text-gray-700">Nom</label>
-            <input type="text" name="nom" id="userName" class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+            <input type="text" name="complete_name" id="userName" class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
             <label for="userEmail" class="block text-sm font-medium text-gray-700 mt-4">Email</label>
             <input type="email" name="email" id="userEmail" class="w-full p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
 
@@ -65,13 +65,13 @@
 <script>
     function openEditUserModal(element) {
         const id = element.getAttribute('data-id');
-        const name = element.getAttribute('data-name');
+        const complete_name = element.getAttribute('data-name');
         const email = element.getAttribute('data-email');
       
 
         console.log("Edit user Modal Data:", {
             id,
-            name,
+            complete_name,
             email,
          
         }); 
@@ -80,11 +80,19 @@
         if (modal) {
             document.getElementById('editUserForm').action = `/user/update/${id}`;
             document.getElementById('userId').value = id;
-            document.getElementById('userName').value = name;
+            document.getElementById('userName').value = complete_name;
             document.getElementById('userEmail').value = email;
             modal.classList.remove('hidden');
         } else {
             console.error("Edit Client Modal not found");
         }
     }
+    window.onclick = function(event) {
+        const editUserModal = document.getElementById('editUserModal');
+  
+        if (event.target === editUserModal) {
+            closeModal('editUserModal');
+        }
+     
+    };
 </script>
