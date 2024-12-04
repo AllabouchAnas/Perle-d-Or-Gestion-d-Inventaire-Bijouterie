@@ -48,6 +48,7 @@ $routes->post('login', 'AuthController::login');
 $routes->get('register', 'AuthController::register');
 $routes->post('register', 'AuthController::register');
 $routes->get('logout', 'AuthController::logout');
+$routes->get('/verif/(:any)', 'AuthController::verifyEmail/$1');
 
 
 
