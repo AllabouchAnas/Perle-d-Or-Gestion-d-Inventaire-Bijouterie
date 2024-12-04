@@ -57,7 +57,7 @@
 
             <!-- Section droite avec image -->
             <div class="w-1/2 hidden md:block">
-                <img src="" alt="Image de présentation" class="h-full w-full object-cover rounded-r-lg">
+                 <img src="" alt="Image de présentation" class="h-full w-full object-cover rounded-r-lg">
             </div>
         </div>
     </div>
