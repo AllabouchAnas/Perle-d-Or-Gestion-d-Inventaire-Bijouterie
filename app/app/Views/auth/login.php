@@ -14,7 +14,7 @@
     <div class="container mx-auto">
         <div class="flex justify-center items-center min-h-screen">
             <!-- Section gauche avec formulaire -->
-            <div class="w-full md:w-1/2 bg-black text-yellow-400 shadow-md rounded-l-lg p-8 max-w-md">
+            <div class="w-full bg-black text-yellow-400 shadow-md rounded-l-lg p-8 max-w-md">
                 <h1 class="text-3xl font-bold text-center mb-6">Connexion</h1>
 
                 <!-- Affichage des messages flash -->
@@ -53,11 +53,6 @@
                 </form>
 
                 <p class="mt-4 text-center text-sm">Pas encore inscrit ? <a href="<?= base_url('register') ?>" class="text-yellow-400 hover:underline">Créer un compte</a></p>
-            </div>
-
-            <!-- Section droite avec image -->
-            <div class="w-1/2 hidden md:block">
-                <img src="" alt="Image de présentation" class="h-full w-full object-cover rounded-r-lg">
             </div>
         </div>
     </div>

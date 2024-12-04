@@ -13,13 +13,9 @@
 <body class="bg-gray-900">
     <div class="container mx-auto">
         <div class="flex justify-center items-center min-h-screen">
-            <!-- Section gauche avec image -->
-            <div class="w-1/2 hidden md:block">
-                <img src="" alt="Image de présentation" class="h-full w-full object-cover rounded-l-lg">
-            </div>
 
             <!-- Section droite avec formulaire -->
-            <div class="w-full md:w-1/2 bg-black text-yellow-400 shadow-md rounded-r-lg p-8 max-w-md">
+            <div class="w-full bg-black text-yellow-400 shadow-md rounded-r-lg p-8 max-w-md">
                 <h1 class="text-3xl font-bold text-center mb-6">Inscription</h1>
 
                 <!-- Affichage des erreurs de validation -->
